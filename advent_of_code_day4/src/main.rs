@@ -4,6 +4,7 @@ use std::path::Path;
 
 fn main() {
     let mut sum = 0;
+    let mut sum2 = 0;
     // File hosts must exist in current path before this produces output
     match read_lines("src/input.txt") {
         Ok(lines) => {
@@ -24,12 +25,18 @@ fn main() {
                     {
                         sum += 1;
                     }
+                    if (range1.contains(&range2.start()) || range1.contains(&range2.end()))
+                        || (range2.contains(&range1.start()) || range2.contains(&range1.end()))
+                    {
+                        sum2 += 1;
+                    }
                 }
             }
         }
         Err(_) => println!("You did not supply the correct input file."),
     }
     println!("The number of fully emcompass assignments is {}", sum);
+    println!("The number of overlaping assignments is {}", sum2);
 }
 
 fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
